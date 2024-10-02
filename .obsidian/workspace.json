@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "Livro IA - Uma Abordagem de AM/Parte 01 - Preparação de Dados/Análise de Dados.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "Livro IA - Uma Abordagem de AM/Parte 01 - Preparação de Dados/Análise de Dados.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "Livro IA - Uma Abordagem de AM/Parte 01 - Preparação de Dados/Análise de Dados.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "Livro IA - Uma Abordagem de AM/Parte 01 - Preparação de Dados/Análise de Dados.md"
               }
             }
           }
@@ -147,5 +147,14 @@
     }
   },
   "active": "c56ee38e1367287f",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "Livro IA - Uma Abordagem de AM/Parte 01 - Preparação de Dados/Pré-Processamento de Dados.md",
+    "Livro IA - Uma Abordagem de AM/Parte 01 - Preparação de Dados/Análise de Dados.md",
+    "Livro IA - Uma Abordagem de AM/Parte 00 - Introdução/Introdução.md",
+    "Livro IA - Uma Abordagem de AM/Parte 00 - Introdução",
+    "Livro IA - Uma Abordagem de AM/Parte 01 - Preparação de Dados",
+    "Livro IA - Uma Abordagem de AM/Parte 01 - Preparação de Dados.md",
+    "README.md",
+    "Livro IA - Uma Abordagem de AM"
+  ]
 }
