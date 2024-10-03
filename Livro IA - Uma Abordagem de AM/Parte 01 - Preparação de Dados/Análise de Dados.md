@@ -62,3 +62,58 @@ Sendo assim, os atributos da nossa tabela com os pacientes de um hospital possue
 
 ### Exploração de Dados
 
+Uma grande quantidade de informações úteis pode ser extraída de um conjunto de dados por meio de sua análise ou exploração. Uma das formas mais simples de explorar um conjunto de dados é a extração de medidas de uma área da estatística denominada estatística descritiva. A estatística descritiva resume de forma quantitativa as principais características de um conjunto de dados. As medidas da estatística descritiva assumem que os dados são gerados por um processo estatístico. Essas medidas permitem capturar informações como:
+- Frequência;
+- Localização ou tendência central (por exemplo, a média);
+- Dispersão ou espelhamento (por exemplo, o desvio padrão);
+- Distribuição ou formato.
+
+A medida de frequência é a mais simples. Ela mede a proporção de vezes que um atributo assume um dado valor em um determinado conjunto de dados. Um exemplo seria: em um conjunto de dados médicos, 40% dos pacientes tem febre.
+As outras medidas diferem para os casos em que os dados apresentam apenas um atributo (dados univariados) ou mais de um atributo (dados multivariados) e são geralmente aplicadas a dados numéricos. Apesar de a maioria dos conjuntos de dados utilizados em AM apresentar mais de um atributo, análises realizadas em cada atributo podem oferecer informações valiosas.
+
+#### Dados Univariados
+
+**Medidas de Localização**: As medidas de localidade definem pontos de referência nos dados e variam para dados numéricos e categóricos. Para dados categóricos, utiliza-se geralmente a moda, que é o valor encontrado com maior frequência para um atributo. Para atributos numéricos, medidas muito utilizadas são média, mediana e percentil.
+
+Um problema da média é a sua sensibilidade à presença de *outliers*. Média é um bom indicador do meio de um conjunto de valores apenas se os valores estão distribuídos simetricamente. Um valor muito mais alto ou muito mais baixo que os demais valores do conjunto pode gerar um valor distorcido para a média, que poderia mudar radicalmente se for retirado o *outlier*. Esse problema é minimizado com o uso da mediana, que é menos sensível a *outliers*. 
+
+Existem ainda variações da média e da mediana, como, por exemplo, a média truncada, que minimiza os problemas da média por meio do descarte dos exemplos nos extremos da sequência ordenada dos valores. Para isso, é necessário definir a porcentagem dos exemplos a serem eliminados em cada extremidade.
+
+Outras medidas muito utilizadas são os quartis e os percentis. Assim como a mediana, essas medidas são utilizadas após os valores serem ordenados. Enquanto a mediana divide os dados ao meio, essas outras medidas utilizam pontos de divisão diferentes. Os quartis dividem os valores ordenados em quartos (quatro partes). Assim, o 1° quartil de uma sequência é o valor que tem 25% dos demais valores abaixo dele. Esse também é o valor do 25° percentil. O 2° quartil é a mediana, que é igual ao 50° percentil. Por fim, o 3° quartil corresponde ao valor que tem 75% dos demais valores abaixo dele.
+
+**Medidas de Dispersão**: As medidas de espalhamento medem a dispersão ou espalhamento de um conjunto de valores. Assim, elas permitem observar se os valores estão amplamente espalhados ou relativamente concentrados em torno de um valor, por exemplo, a média. As medidas de espalhamento mais comuns são:
+- Intervalo;
+- Variância;
+- Desvio padrão.
+
+O intervalo é a medida mais simples e mostra o espalhamento máximo entre os valores de um conjunto (valor máximo subtraído do valor mínimo). Se a maioria dos valores for próxima de um ponto, com um pequeno número de valores extremos, o intervalo não será uma boa medida do espalhamento dos valores. 
+A medida mais utilizada para avaliar o espalhamento de valores é a variância. Outra medida de espalhamento, o desvio padrão, é dada pela raiz quadrada da variância. Assim como a média, o valor da variância poder ser distorcido pela presença de *outliers*, pois a variância calcula a diferença entre cada valor e a média. 
+Outras estimativas mais robustas de espalhamento frequentemente utilizadas são: desvio médio absoluto (*absolute average deviation*), desvio mediano absoluto (*median absolute deviation*) e intervalo interquartil (*interquartil range* ou IQR). 
+
+**Medidas de Distribuição**: As medidas que são definidas em torno da média de um conjunto de valores, como as medidas média e desvio padrão, são em sua maioria instanciações de uma medida denominada **momento**.
+
+$momento_k (x^j) = \sum_{i=1}^{n} (x_i - \bar{x}^j)^k / (n-1)$ 
+
+Para cada valor do parâmetro *k*, uma medida diferente do momento é definida. Assim:
+- quando k = 1, tem-se o valor 0, que é o primeiro momento em torno da origem ou primeiro momento central;
+- quando k = 2, tem-se a variância, que é o segundo momento central;
+- quando k = 3, tem-se a obliquidade (*skweness*), que é o terceiro momento central;
+- quando k = 4, tem-se a curtose (*kurtosis*), que é o quarto momento central.
+
+O terceiro e quarto momentos, obliquidade e curtose, são medidas de distribuição, por mostrarem como os valores estão distribuídos. O terceiro momento, obliquidade (em inglês *skweness*), mede a simetria da distribuição dos dados em torno da média. Em uma distribuição simétrica, se os valores forem distribuídos em intervalos do mesmo tamanho, um histograma com a quantidade de valores em cada intervalo tem a mesma aparência à direita e à esquerda do ponto central. 
+
+A distribuição dos valores em um conjunto de dados está associada ao valor da obliquidade da seguinte forma:
+- obliquidade = 0 (simétrica): a distribuição é aproximadamente simétrica (ocorre para uma distribuição normal);
+- obliquidade > 0 (positiva): a distribuição concentra-se mais ao lado esquerdo;
+- obliquidade < 0 (negativa): a distribuição concentra-se mais ao lado direito.
+
+![[Pasted image 20241003091222.png]]
+
+O quarto momento calcula a curtose (em inglês *kurtosis*), que é uma medida de dispersão que captura o achatamento da função de distribuição. Assim como na medida de obliquidade, a seguinte relação, é observada entre o valor da curtose e a distribuição dos valores em um conjunto de dados:
+- curtose = 0 (normal): o histograma de distribuição dos dados apresenta o mesmo achatamento que uma distribuição normal;
+- curtose > 0 (positiva): o histograma de distribuição dos dados apresenta uma distribuição mais alta e concentrada que a distribuição normal;
+- curtose < 0 (negativa): o histograma de distribuição dos dados apresenta uma distribuição mais achatada que a distribuição normal.
+![[Pasted image 20241003091618.png]]
+
+#### Dados Multivariados
+
