@@ -13,6 +13,7 @@ Os valores que um atributo pode assumir podem ser definidos de diferentes formas
 
 #### Tipo: 
 O tipo define se o atributo representa quantidades, sendo então denominado quantitativo (ou numérico) ou então qualidades, denominado como qualitativo (ou categórico).== Exemplos de conjuntos de valores qualitativos são {pequeno, médio e grande}, enquanto para valores quantitativos seriam {23, 45, 12}. 
+
 Note ainda que valores quantitativos podem ser **contínuos** ou **discretos**. Valores contínuos podem assumir um número infinito de valores, frequentemente representados por números reais. Exemplos clássicos são peso, tamanho e distância. Por outro lado, atributos discretos contém um número finito de valores. Um caso especial dos atributos discretos são os atributos binários (ou booleanos), que apresentam apenas dois valores, como 0 ou 1.
 
 Sendo assim, os atributos da nossa tabela com os pacientes de um hospital possuem as seguintes classificações:
@@ -87,7 +88,9 @@ Outras medidas muito utilizadas são os quartis e os percentis. Assim como a med
 - Desvio padrão.
 
 O intervalo é a medida mais simples e mostra o espalhamento máximo entre os valores de um conjunto (valor máximo subtraído do valor mínimo). Se a maioria dos valores for próxima de um ponto, com um pequeno número de valores extremos, o intervalo não será uma boa medida do espalhamento dos valores. 
+
 A medida mais utilizada para avaliar o espalhamento de valores é a variância. Outra medida de espalhamento, o desvio padrão, é dada pela raiz quadrada da variância. Assim como a média, o valor da variância poder ser distorcido pela presença de *outliers*, pois a variância calcula a diferença entre cada valor e a média. 
+
 Outras estimativas mais robustas de espalhamento frequentemente utilizadas são: desvio médio absoluto (*absolute average deviation*), desvio mediano absoluto (*median absolute deviation*) e intervalo interquartil (*interquartil range* ou IQR). 
 
 **Medidas de Distribuição**: As medidas que são definidas em torno da média de um conjunto de valores, como as medidas média e desvio padrão, são em sua maioria instanciações de uma medida denominada **momento**.
@@ -116,4 +119,20 @@ O quarto momento calcula a curtose (em inglês *kurtosis*), que é uma medida de
 ![[Pasted image 20241003091618.png]]
 
 #### Dados Multivariados
+Dados multivariados são aqueles que possuem mais de um atributo de entrada. Nesses casos, as medidas de localidade podem ser obtidas calculando a medida de localidade para cada atributo separadamente. As medidas de espalhamento também podem ser calculadas para cada atributo independentemente dos demais utilizando qualquer medida de espalhamento. 
 
+Dados multivariados permitem ainda análises da relação entre dois ou mais atributos. Por exemplo, para atributos quantitativos, o espalhamento de um conjunto de dados é mais bem capturado por uma matriz de covariância, em que cada elemento é a covariância entre dois atributos. 
+
+A covariância entre dois atributos mede o grau com que os atributos variam juntos. Seu valor depende da magnitude dos atributos. Um valor próximo de 0 indica que os atributos não tem um relacionamento linear. Um valor positivo indica que os atributos são diretamente relacionados, enquanto o contrário ocorre se o valor for negativo.
+
+A medida de covariância é afetada pela escala de variação de valores dos atributos avaliados. Assim, dois atributos com variação de valores elevada (por exemplo, na escala dos milhares) podem apresentar um valor de covariância maior que dois atributos mais semelhantes entre si, mas de menor variação de valores (por exemplo, na escala entre 0 e 1). Por isso, não é possível avaliar o relacionamento entre dois atributos observando apenas a covariância entre eles.
+
+A medida de **correlação** elimina esse problema retirando a influência da variação dos valores. Como resultado, ela apresenta uma indicação mais clara da força da relação linear entre dois atributos. Por isso, a correlação é mais utilizada para explorar dados multivariados que a covariância. A matriz de correlação apresenta a correlação entre cada possível par de atributos de um conjunto de dados.
+
+Assim como na medida de covariância, quando dois atributos apresentam uma correlação positiva, o aumento do valor de um deles é geralmente acompanhado por um aumento no valor do outro. Da mesma forma, quando dois atributos tem uma correlação negativa, a redução no valor de um deles é geralmente acompanhada do aumento do valor do outro.
+
+A análise dos dados multivariados também pode ser facilitada pelo uso de recursos de visualização. Assim como histogramas, gráficos de pizza e boxplots são utilizados para visualizar dados univariados, outros diagramas tem sido adotados para visualizar dados multivariados, particularmente a relação entre os diferentes atributos. Entre estes diagramas, um dos mais utilizados é o *scatter plot*, que ilustra a correlação linear entre dois atributos.
+
+Em um *scatter plot*, a cada objeto, considerando apenas dois dos seus atributos, é associado uma posição ou ponto em um plano bidimensional. Os valores dos atributos definem as coordenadas desse ponto. 
+
+![[Pasted image 20241004091824.png]]
