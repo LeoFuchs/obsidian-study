@@ -11,7 +11,8 @@ Considere um conjunto de dados provenientes de pacientes de um hospital:
 | 4340 | Cláudia | 21    | F    | 52   | Uniformes    | 37,6  | 1      | PE   | Saudável    |
 Os valores que um atributo pode assumir podem ser definidos de diferentes formas. Aqui serão definidos dois aspectos: tipo e escala. O tipo de um atributo diz respeito ao grau de quantização dos dados, enquanto a escala indica a significância relativa dos valores.
 
-#### Tipo: 
+#### Tipo
+
 O tipo define se o atributo representa quantidades, sendo então denominado quantitativo (ou numérico) ou então qualidades, denominado como qualitativo (ou categórico).== Exemplos de conjuntos de valores qualitativos são {pequeno, médio e grande}, enquanto para valores quantitativos seriam {23, 45, 12}. 
 
 Note ainda que valores quantitativos podem ser **contínuos** ou **discretos**. Valores contínuos podem assumir um número infinito de valores, frequentemente representados por números reais. Exemplos clássicos são peso, tamanho e distância. Por outro lado, atributos discretos contém um número finito de valores. Um caso especial dos atributos discretos são os atributos binários (ou booleanos), que apresentam apenas dois valores, como 0 ou 1.
@@ -32,6 +33,7 @@ Sendo assim, os atributos da nossa tabela com os pacientes de um hospital possue
 | Diagnóstico | Qualitativo           |
 
 #### Escala
+
 A escala define as operações que podem ser realizadas sobre os valores do atributo. Em relação à escala, os atributos podem ser classificados como **nominais, ordinais, intervalares e racionais.** Os dois primeiros são para valores qualitativos (nominais e ordinais), enquanto os dois últimos são para valores quantitativos (intervalares e racionais).
 
 Na escala **nominal**, como o nome sugere, os valores são apenas nomes diferentes, carregando a menor quantidade de informação possível. Não existe uma relação de ordem entre seus valores. Assim, as operações mais utilizadas são as de igualdade ou desigualdade de valores. 
@@ -119,6 +121,7 @@ O quarto momento calcula a curtose (em inglês *kurtosis*), que é uma medida de
 ![[Pasted image 20241003091618.png]]
 
 #### Dados Multivariados
+
 Dados multivariados são aqueles que possuem mais de um atributo de entrada. Nesses casos, as medidas de localidade podem ser obtidas calculando a medida de localidade para cada atributo separadamente. As medidas de espalhamento também podem ser calculadas para cada atributo independentemente dos demais utilizando qualquer medida de espalhamento. 
 
 Dados multivariados permitem ainda análises da relação entre dois ou mais atributos. Por exemplo, para atributos quantitativos, o espalhamento de um conjunto de dados é mais bem capturado por uma matriz de covariância, em que cada elemento é a covariância entre dois atributos. 
