@@ -36,3 +36,46 @@ O ideal é que a amostra não seja grande, mas que seus dados obedeçam à mesma
 - **Amostragem estratificada**: A amostragem estratificada é usada quando as classes apresentam propriedades diferentes. Em problemas de classificação, um cuidado que deve ser tomado na amostragem diz respeito à distribuição dos dados nas diferentes classes. A existência de classes com uma quantidade significativamente maior de exemplos que as demais pode levar à indução de classificadores tendenciosos para as classes majoritárias. Por outro lado, pode ser que algumas classes sejam mais difíceis de classificar que outras e isso possa ser minimizado no processo de amostragem. Essa abordagem também possui variações. A mais simples delas é manter o mesmo número de objetos para cada classe (exemplo 50 objetos na classe 0 e 50 objetos na classe 1). Outra opção é manter o número de objetos em cada classe proporcional ao número de objetos da classe no conjunto original.
 - **Amostragem progressiva**: A amostragem progressiva começa com uma amostra pequena e aumenta progressivamente o tamanho da amostra extraída, enquanto a acurácia preditiva continuar a melhorar. Como resultado, é possível definir a menor quantidade de dados necessária, reduzindo ou eliminando a perda de acurácia. Essa abordagem geralmente fornece uma boa estimativa para o tamanho da amostra.
 
+#### Dados Desbalanceados
+
+O problema de dados desbalanceados é tópico da área de classificação de dados. Em vários conjuntos de dados reais, o número de objetos varia para diferentes classes. Um exemplo seria um conjunto de dados de clientes de um banco, em que cada cliente é rotulado como tendo ou não ficado com o saldo da sua conta negativo nos últimos 90 dias. Se a porcentagem de clientes que ficou com o saldo negativo nesse período for de 5%, a classe majoritária terá 95% dos dados.
+
+Vários algoritmos de AM tem seu desempenho prejudicado na presença de dados desbalanceados. Quando alimentados com dados desbalanceados, esses algoritmos tendem a favorecer a classificação de novos dados na classe majoritária. Técnicas que procuram balancear artificialmente o conjunto de dados podem ser utilizadas para lidar com o problema de desbalanceamento. As principais técnicas são:
+- Redefinir o tamanho do conjunto de dados.
+- Utilizar diferentes custos de classificação para as diferentes classes.
+- Induzir um modelo para uma classe.
+
+No primeiro caso, podem ocorrer tanto o acréscimo de objetos à classe minoritária como a eliminação de objetos da classe majoritária. Para o acréscimo de novos objetos, existe o risco de os objetos acrescentados representarem situações que nunca ocorrerão, induzindo um modelo inadequado aos dados. Além disso, pode ocorrer *overfitting*, em que o modelo é superajustado aos dados de treinamento. Quando dados são eliminados da classe majoritária, é possível que dados de grande importância para a indução do modelo correto sejam perdidos. Isso pode levar ao problema de *underfitting*, em que o modelo induzido não se ajusta aos dados de treinamento.
+
+A utilização de custos de classificação diferentes para as classes majoritária e minoritária tem como dificuldade a definição destes custos. Por exemplo, se o número de exemplos da classe majoritária for o dobro do número de exemplos da minoritária, um erro de classificação para um exemplo da classe minoritária pode equivaler à ocorrência de dois erros de classificação para um exemplo da classe majoritária. Entretanto, a definição dos diferentes custos geralmente não é tão direta assim.
+
+O último caso inclui as técnicas de classificação com apenas uma classe, em que a classe minoritária ou a classe majoritária (ou ambas as classes) são aprendidas separadamente. Nesse caso, pode ser utilizado algoritmos de classificação para uma classe apenas. Esses algoritmos são treinados utilizando apenas exemplos da classe positiva.
+
+#### Limpeza de Dados
+
+Conjuntos de dados podem também apresentar dificuldades relacionadas com a qualidade dos dados. Exemplos mais frequentes dessas dificuldades são dados ruidosos, redundantes ou incompletos. Essas deficiências nos dados podem ser causadas por problemas nos equipamentos que realizam a coleta, a transmissão e o armazenamento dos dados ou problemas no preenchimento ou na entrada dos dados por seres humanos. Algumas técnicas de AM conseguem lidar bem com algumas dessas imperfeições nos dados. Já outras tem dificuldades ou não conseguem lidar com dados que apresentem algumas dessas deficiências.
+
+**Dados Incompletos**
+Como já mencionado, um dos problemas que pode ser encontrado em conjuntos de dados é a ausência de valores para alguns atributos de alguns objetos. Algumas técnicas de AM podem gerar erro de execução quando um ou mais atributos do conjunto de treinamento não apresentam valor. Várias alternativas tem sido propostas para lidar com esses atributos. As alternativas mais utilizadas são:
+- Eliminar os objetos com valores ausentes. Essa alternativa não é indicada quando poucos atributos do objeto possuem valores ausentes, quando o número de atributos com valores ausentes varia muito entre os objetos com esse problema ou quando o número de objetos que restarem for pequeno.
+- Definir e preencher manualmente valores para os atributos com valores ausentes. Essa alternativa não é factível quando o número de objetos ou atributos com valores ausentes for muito grande.
+- Utilizar algum método ou heurística para automaticamente definir valores para atributos com valores ausentes. Essa é a alternativa mais utilizada.
+- Empregar algoritmos de AM que lidam internamente com valores ausentes. Esse é o caso, por exemplo, de alguns algoritmos indutores de árvores de decisão.
+
+A definição automática de valores para completar os valores ausentes tem seguido três abordagens diferentes na literatura:
+- Estabelecer para o atributo um novo valor que indique que o atributo possuía um valor desconhecido (exemplo: -1). Esse valor pode ser comum a todos os atributos ou um valor diferente para cada atributo. O problema dessa alternativa é que o algoritmo indutor pode assumir que o valor desconhecido representa um conceito importante.
+- Utilizar a média, moda ou mediana dos valores conhecidos para esse atributo. Essa medida pode ser calculada utilizando todos os objetos ou apenas os objetos da mesma classe do objeto com o atributo a ser preenchido.
+- Empregar um indutor para estimar o valor do atributo. Para isso, o valor a ser definido seria o atributo alvo e os demais atributos seriam os atributos de entrada. A vantagem desse método é justamente a utilização de informação presente nos demais atributos para inferir o valor do atributo ausente. Essa abordagem é a mais popular. Em geral, resulta na utilização do valor empregado em objetos semelhantes.
+
+**Dados Inconsistentes**
+Dados inconsistentes são aqueles que possuem valores conflitantes em seus atributos. Essa inconsistência pode se dar entre valores de atributos de entrada (por exemplo, valor 120 para peso e 3 para idade) ou entre todos os valores dos atributos de entrada e o valor do atributo de saída (por exemplo, dois pacientes com as mesmas características, mas diagnósticos diferentes). 
+
+Inconsistências podem ser identificadas quando relações conhecidas entre os atributos são violadas. Por exemplo, quando é sabido que os valores de um atributo variam de forma inversamente proporcional em relação a valores de um outro atributo.
+
+**Dados Redundantes**
+
+
+
+**Dados com Ruídos**
+
+
