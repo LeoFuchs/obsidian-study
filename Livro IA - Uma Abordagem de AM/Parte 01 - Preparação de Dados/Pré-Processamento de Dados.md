@@ -73,9 +73,37 @@ Dados inconsistentes são aqueles que possuem valores conflitantes em seus atrib
 Inconsistências podem ser identificadas quando relações conhecidas entre os atributos são violadas. Por exemplo, quando é sabido que os valores de um atributo variam de forma inversamente proporcional em relação a valores de um outro atributo.
 
 **Dados Redundantes**
+Um conjunto de dados pode possuir tanto objetos como atributos redundantes. Um objeto é redundante quando ele é muito semelhante a outro objeto do mesmo conjunto de dados, ou seja, seus atributos possuem valores muito semelhantes aos atributos de pelo menos um outro objeto. Um atributo é redundante quando seu valor para todos os objetos pode ser deduzido a partir do valor de um ou mais atributos. No caso extremo, possui o mesmo valor que um outro atributo para cada um dos objetos do conjunto de dados.
 
+Objetos redundantes em um conjunto de dados participam mais de uma vez do processo de ajuste de parâmetros de um modelo, contribuindo assim mais que os outros objetos para a definição do modelo final. Isso pode dar ao modelo a falsa impressão de que esse perfil do objeto é mais importante que os demais. Como resultado, o tempo necessário para a indução de um modelo pode aumentar. Por isso, geralmente é desejável a eliminação de redundâncias, que pode ser feita em dois passos: identificação de objetos redundantes e eliminação das redundâncias encontradas.
 
+A eliminação da redundância pode ocorrer pela elminação dos objetos semelhantes a um dado objeto ou pela combinação dos valores dos atributos dos objetos semelhantes. Conforme dito anteriormente, não apenas objetos, mas atributos também podem apresentar redundância. Um exemplo seria termos um atributo *quantidade de vendas*, um atributo *valor por venda* e um atributo *venda total*. Nesse caso, o valor do atributo *venda total* pode ser definido a partir do valor dos outros dois atributos. Um atributo redundante pode supervalorizar um dado aspecto  dos dados, por estar presente mais de uma vez. Assim , o desempenho de um algoritmo de AM geralmente melhora com a eliminação de atributos redundantes.
+
+A redundância de um atributo está relacionada com a sua correlação com um ou mais atributos do conjunto de dados. Dois ou mais atributos estão correlacionados quando apresentam um perfil de variação semelhante para os diferentes objetos Quanto mais correlacionados os atributos, maior o grau de redundância. Se a correlação ocorre entre um atributo de entrada e um atributo rótulo, esse atributo de entrada terá grande influência na predição do valor do rótulo.
 
 **Dados com Ruídos**
+Dados com ruídos são dados que contém objetos que, aparentemente, não pertencem à distribuição que gerou os dados analisados. Dados com ruídos podem levar a um superajuste do modelo utilizado, pois o algoritmo que induz o modelo pode se ater às especificidades relacionadas com os ruídos, em vez da distribuição verdade que gerou os dados. Por outro lado, a eliminação de dados ruidosos pode levar à perda de informação importante. A eliminação desses dados pode fazer com que algumas regiões do espaço de atributos não sejam consideradas no processo de indução de hipóteses.
+
+Existem diversas técnicas de pré-processamento que podem ser aplicadas na detecção e remoção de ruídos. Em estatística, esse problema é comumente solucionado por meio de técnicas baseadas em distribuição, em que os ruídos são identificados como observações que diferem de uma distribuição utilizada na modelagem dos dados. O maior problema dessa abordagem está em assumir que a distribuição dos dados é conhecida a priori, o que não reflete a verdade em grande parte das aplicações práticas.
+
+Diversas outras técnicas podem ser utilizadas para reduzir o ruído em um atributo, que pode ser em um atributo de entrada, mas também no atributo meta. De forma resumida, elas podem ser reunidas em cinco grupos:
+- **Técnicas de encestamento**: essas técnicas suavizam o valor de um atributo da seguinte forma. Primeiro, os valores encontrados para esse atributo em todos os objetos são ordenados. Em seguida, esses valores são divididos em cestas, cada uma com um mesmo número de valores. Os valores em uma mesma cesta são substituídos, por exemplo, pela média ou mediana dos valores presentes na cesta.
+- **Técnicas baseadas em agrupamento dos dados**: essas técnicas podem ser utilizadas tanto para os objetos como para os atributos. No caso dos atributos, os valores dos atributos são agrupados por uma técnica de agrupamento. Valores de atributos que não formarem um grupo com outros valores são considerados ruídos ou *outliers*. O mesmo é dito de objetos que forem colocados em um grupo no qual os demais objetos pertencem a uma outra classe.
+- **Técnicas baseadas em distância**: a presença de ruído em um ou mais atributos de um objeto frequentemente faz com que esse objeto se distancie dos demais objetos de sua classe. As técnicas baseadas em distância verificam a que classe pertencem os objetos mais próximos de cada objeto x. Se esses objetos mais próximos pertencem a outra classe, são boas as chances do objeto x apresentar ruído, embora possa também ser um *borderline* (próximo à fronteira de separação das classes).
+- **Técnicas baseadas em regressão ou classificação**: as técnicas baseadas em regressão utilizam uma função de regressão para, dado um valor com ruído, estimar seu valor verdadeiro. Se o valor a ser estimado for simbólico, uma técnica de classificação pode ser utilizada.
+
+#### Transformação de Dados
+
+Várias técnicas de AM estão limitadas à manipulação de valores de determinados tipos, por exemplo, apenas valores numéricos ou apenas valores simbólicos. Adicionalmente, algumas técnicas tem seu desempenho influenciado pelo intervalo de variação dos valores numéricos.
+
+Esta seção divide as diferentes técnicas para abordar esse problema em três partes. A primeira parte descreve técnicas que podem ser utilizadas para converter valores simbólicos em numéricos. A segunda parte parte mostra técnicas para converter valores numéricos em valores simbólicos. Finalmente, a terceira parte mostra casos em que a conversão não altera o tipo do atributo, notadamente relacionados com atributos com valores numéricos, ou seja, transformações que podem envolver, por exemplo, mudanças de escala ou de intervalo de valores.
+
+**Conversão Simbólico-Numérico**
+
+**Conversão Numérico-Simbólico**
+
+**Transformação de Atributos Numéricos**
+
+
 
 
