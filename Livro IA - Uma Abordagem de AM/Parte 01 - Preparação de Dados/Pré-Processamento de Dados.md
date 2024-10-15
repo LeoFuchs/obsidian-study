@@ -99,11 +99,72 @@ Várias técnicas de AM estão limitadas à manipulação de valores de determin
 Esta seção divide as diferentes técnicas para abordar esse problema em três partes. A primeira parte descreve técnicas que podem ser utilizadas para converter valores simbólicos em numéricos. A segunda parte parte mostra técnicas para converter valores numéricos em valores simbólicos. Finalmente, a terceira parte mostra casos em que a conversão não altera o tipo do atributo, notadamente relacionados com atributos com valores numéricos, ou seja, transformações que podem envolver, por exemplo, mudanças de escala ou de intervalo de valores.
 
 **Conversão Simbólico-Numérico**
+Técnicas como redes neurais artificiais e *support vector machines* e vários algoritmos de agrupamento liam apenas com dados numéricos. Assim, quando o conjunto de dados utilizado por essas técnicas apresenta atributos simbólicos, os valores desses atributos devem ser convertidos para valores numéricos.
+
+Quando o atributo é do tipo nominal e assume apenas dois valores, se os valores denotam a presença ou ausência de uma característica ou se apresentam uma relação de ordem, um dígito binário é suficiente. Para um atributo simbólico com mais de dois valores, a técnica utilizada na conversão depende de o atributo ser nominal ou ordinal. Se houver uma relação de ordem entre os valores do atributo, a inexistência de uma relação de ordem deve continuar para os valores numéricos gerados. Ou seja, a diferença entre quaisquer dois valores numéricos deve ser a mesma. Uma forma de conseguir isso é codificar cada valor nominal por uma sequência de bits, em que *c* é igual ao número de possíveis valores ou categorias.
+
+Na codificação 1 - de - c, também denominada canônica ou topológica, cada sequência possui apenas um bit com o valor 1 e os demais com o valor 0. Nessa codificação, cada posição da sequência binária corresponde a um possível valor do atributo nominal. Por exemplo, se a sequência binária possui 4 bits, o primeiro bit corresponde ao primeiro valor, o segundo bit ao segundo valor e assim por diante. A moda do valor de um atributo para o conjunto de objetos é definida pela posição (bit) da sequência que apresenta o maior número de valores iguais a 1.
+
+A tabela abaixo ilustra a codificação 1 - de - c para um conjunto de seis valores nominais, em que cada valor representa uma cor.
+
+| Atributo Nominal | Código 1 - de - c |
+| ---------------- | ----------------- |
+| Azul             | 100000            |
+| Amarelo          | 010000            |
+| Verde            | 001000            |
+| Preto            | 000100            |
+| Marrom           | 000010            |
+| Branco           | 000001            |
+Dependendo do número de valores nominais, a sequência binária para representar cada valor pode ficar muito longa. Imagine que você queira codificar os nomes de países com a codificação 1 - de - c. Como existem 193 países, seria necessário utilizar vetores com 193 elementos. Uma alternativa para este problema é a representação dos possíveis valores nominais por um conjunto de pseudoatributos. Para este mesmo exemplo, ao invés de simbolizar o nome do país, poderíamos simbolizar características que somadas, se tornarão únicas e são suficientes para identificar o país, como continente, PIB, população e área.
+
+Quando existe uma relação de ordem, o atributo é do time ordinal, e a codificação deve preservar essa relação. Para isso, deve ser utilizada uma codificação em que a ordem dos valores esteja clara. Quando o valor numérico é um número inteiro ou real, essa transformação é simples e direta: basta ordenar os valores categóricos ordinais e codificar cada valor de acordo com sua posição na ordem, como ilustrado na tabela abaixo.
+
+| Atributo Nominal | Código 1 - de - c |
+| ---------------- | ----------------- |
+| Primeiro         | 0                 |
+| Segundo          | 1                 |
+| Terceiro         | 2                 |
+| Quarto           | 3                 |
+| Quinto           | 4                 |
+| Sexto            | 5                 |
 
 **Conversão Numérico-Simbólico**
+Algumas técnicas de AM foram desenvolvidas para trabalhar com valores qualitativos. Isso ocorre com uma parcela dos algoritmos de classificação e de associação. Se o atributo quantitativo for do tipo discreto e binário, com apenas dois valores, a conversão é trivial. Basta associar um nome a cada valor. Se o atributo original for formado por sequências binárias sem uma relação de ordem em si, cada sequência pode ser substituída por um nome ou categoria.
+
+Nos demais casos, métodos de discretização permitem transformar atributos quantitativos em qualitativos. Para isso, eles transformam valores numéricos em intervalos ou categorias. Quando um atributo quantitativo é discretizado, o conjunto de possíveis valores é dividido em intervalos, e cada intervalo de valores quantitativos é convertido em um valor qualitativo. Em alguns métodos, o usuário pode influenciar a definição dos intervalos, definindo valores para parâmetros como número máximo de intervalos. Esses métodos são denominados paramétricos. Os métodos não paramétricos definem os intervalos utilizando apenas as informações presentes nos valores do atributo.
+
+Os métodos de discretização podem ainda ser supervisionados ou não supervisionados. No primeiro caso, é utilizada a informação sobre a classe dos exemplos. as técnicas supervisionadas levam a melhores resultados, uma vez que a definição dos intervalos sem conhecimento das classes pode levar à uma mistura. Uma abordagem supervisionada simples seria escolher pontos de corte dos intervalos que maximizam a pureza destes.
+
+Algumas das estratégias utilizadas pelos diferentes métodos são:
+- Larguras iguais: divide-se o intervalo original de valores em subintervalos com a mesma largura. O desempenho dessa estratégia pode ser afetado pela presença de *outliers*.
+- Frequência iguais: atribui o mesmo número de objetos a cada subintervalo. Essa estratégia pode gerar intervalos de tamanhos muito diferentes.
+- Uso de algoritmo de agrupamento de dados.
+- Inspeção visual.
 
 **Transformação de Atributos Numéricos**
+Algumas vezes, o valor numérico de um atributo precisa ser transformado em outro valor numérico. Isso geralmente ocorre quando os limites inferior e superior de valores dos atributos são muito diferentes, o que leva a uma grande variação de valores, ou ainda quando vários atributos estão em escalas diferentes. Essa transformação é geralmente realizada para evitar que um atributo predomine sobre o outro. No entanto, pode haver situações em que essa variação deve ser preservada por ser importante para indução de um bom modelo.
 
+Vamos supor que, dado um atributo com valores inteiros, para a indução de um bom modelo apenas a magnitude dos valores seja importante, não o sinal. Uma transformação necessária seria então converter os valores desse atributo para o seu valor absoluto.
+
+Outra transformação muito utilizada é a **normalização de dados**. A normalização de dados é recomendável quando os limites de valores de atributos distintos são muito diferentes, para evitar que um atributo predomine sobre outro. Quando recomendada, ela é aplicada a cada atributo individualmente e pode ocorrer de duas formas: por **amplitude ou por distribuição**.
+
+**A normalização por amplitude pode ser por reescala (min-max) ou por padronização (*standardization*).** A primeira define uma nova escala de valores, limites mínimo e máximo, para todos os atributos. Enquanto a segunda define um valor central e um valor de espalhamento comuns para todos os atributos.
+
+Na normalização por reescala, também chamada de min-max, são inicialmente definidos os valores mínimo (min) e máximo (max) para os novos valores de cada atributo (comumente definidos com min = 0 e max = 1). Depois, a equação a seguir é utilizada sobre cada atributo, em cada observação, onde maior é o maior valor encontrado na distribuição e menor o menor valor encontrado na distribuição do atributo.
+
+$v_{novo} = min + \frac{v_{atual} - menor}{maior - menor} (max - min)$
+
+Para a normalização por padronização, a cada valor do atributo a ser normalizado é adicionada ou subtraída uma medida de localização e o valor resultante é em seguida multplicado ou dividido por uma medida de escala. Se as medidas de localização e de escala forem a média (μ) e a variância (σ), respectivamente, os valores de um atributo são convertidos para um novo conjunto de valores com média 0 e variância 1, que é obtido conforme a equação:
+
+$v_{novo} = \frac{v_{atual} - μ}{σ}$
+
+**Geralmente, é preferível padronizar (StandardScaler) à reescala (min-max Scaler), pois a padronização lida melhor com *outliers*.** 
+
+A normalização por distribuição muda a escala de valores de um atributo. Um exemplo dessa normalização é a aplicação da função para ordenar os valores do atributo a ser normalizado a substituição de cada valor pela posição que ele ocupa no ranking (por exemplo, a aplicação dessa normalização aos valores 1, 5, 9 e 3 gera, respectivamente, os valores 1, 3, 4 e 2).
+
+https://vitalflux.com/minmaxscaler-standardscaler-python-examples/#Differences_between_MinMaxScaler_and_StandardScaler
+
+#### Redução de Dimensionalidade
 
 
 
