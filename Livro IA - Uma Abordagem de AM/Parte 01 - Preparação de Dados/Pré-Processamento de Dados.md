@@ -166,5 +166,65 @@ https://vitalflux.com/minmaxscaler-standardscaler-python-examples/#Differences_b
 
 #### Redução de Dimensionalidade
 
+Muitos problemas que podem ser tratados por técnicas de AM apresentam um número elevado de atributos. Um exemplo de grupo de problemas em que o número de atributos é muito grande são as aplicações de reconhecimento de imagens. Se cada pixel da imagem for considerado um atributo, cada imagem com 1024 por 1024 pixels teria mais de um milhão de atributos. 
+
+Algumas das dificuldades do número muito grande de atributos em algoritmos de AM são provenientes do problema da maldição da dimensionalidade. Em muitos algoritmos de AM, para que dados com um número elevado de atributos possam ser utilizados, a quantidade de atributos precisa ser reduzida. A redução pode ainda melhorar o desempenho do modelo, reduzir seu custo computacional e tornar os resultados mais compreensíveis.
+
+Diferentes técnicas podem ser utilizadas para a redução do número de atributos. Essas técnicas podem ser divididas em duas grandes abordagens: **agregação e seleção de atributos.** Enquanto as técnicas de agregação substituem os atributos originais por novos atributos formados pela combinação de grupos de atributos, as técnicas de seleção mantém uma parte dos atributos originais e descartam os demais atributos.
+
+**Agregação**: As principais técnicas utilizadas para reduzir as dimensões por agregação combinam os atributos originais por meio de funções lineares ou não lineares. Uma das técnicas mais conhecidas é a Análise de Componentes Principais (PCA, do inglês *Principal Component Analysis*). A técnica PCA descorrelaciona estatisticamente os exemplos, reduzindo a dimensionalidade do conjunto de dados original pela eliminação de redundâncias. 
+
+As técnicas de agregação, ao combinar atributos, levam à perda de valores originais. Em vários ramos de atuação, é importante preservar os valores dos atributos para que os resultados obtidos possam ser interpretados. Por isso, nessas áreas, é mais frequente a redução do número de atributos pelo uso de técnicas de seleção de atributos.
+
+**Seleção de Atributos**: Conforme visto anteriormente, alguns atributos são claramente redundantes ou irrelevantes, podendo ser manualmente eliminados. No entanto, na prática, vários atributos passíveis de eliminação não são facilmente identificados, o que torna pouco eficiente o uso de técnicas visuais e manuais. Para lidar com esses casos, diversas técnicas automáticas tem sido propostas na literatura para a seleção de atributos. Essas técnicas, em geral, procuram por um subconjunto ótimo de atributos de acordo com um dado critério.
+
+As técnicas propostas podem ser classificadas de diferentes formas. Uma delas diz respeito à avaliação do conjunto de atributos selecionados. Nesse caso, **as técnicas existentes podem estar integradas a um algoritmo de indução ou ser independentes do algoritmo**. Três abordagens são então utilizadas:
+
+*Baseada em FIltro*: Na abordagem baseada em filtro, em uma etapa de pré-processamento, um subconjunto dos atributos originais é filtrado de acordo com algum critério, sem levar em consideração o algoritmo de aprendizado que utilizará esse subconjunto. Por exemplo, um filtro poderia considerar a correlação entre os atributos, e selecionar apenas um dos atributos, dados vários altamente correlacionados.
+
+A independência dos filtros em relação ao algoritmo de AM pode ser vantajosa, se houver a necessidade de os atributos selecionados serem empregados com diversos algoritmos de AM. Porém, como a seleção e a indução são processos separados, o viés de um não interage com o viés do outro, o que pode levar à construção de indutores com desempenho aquém do desejado. 
+
+*Baseada em Wrapper*: A abordagem baseada em *wrapper* utiliza algum algoritmo de aprendizado como uma caixa preta para a seleção. Geralmente é utilizada junto com uma técnica de amostragem. Para cada possível subconjunto de atributos, o algoritmo é consultado e o subconjunto que apresentar a melhor combinação entre redução da taxa de erro e redução do número de atributo é, em geral, selecionado.
+
+Técnicas baseadas em *wrapper* representam uma alternativa simples e poderosa para selecionar atributos. Elas são algumas vezes criticadas por serem técnicas de força bruta, com um custo computacional elevado. Mas isso não é sempre verdade, estratégias de busca eficientes tem sido utilizadas para algumas dessas técnicas. Por incorporar o viés do classificador, as técnicas baseadas em *wrapper* em geral conseguem obter um conjunto de atributos que leva a um melhor desempenho posterior do modelo.
+
+*Embutida*: Na abordagem embutida, a seleção do subconjunto é embutida ou integrada no próprio algoritmo de aprendizado. As árvores de decisão, por exemplo, realizam esse tipo de seleção interna de atributos. Em geral, as técnicas embutidas fazem melhor uso dos dados disponíveis do que as técnicas baseadas em *wrapper*. Além disso, por não precisar retreinar um algoritmo de AM para cada novo conjunto de atributos, essas técnicas costumam ser mais rápidas.
+
+Outra forma de classificação está relacionada com a **seleção dos atributos ser feita de forma individual (ordenação) ou coletiva (seleção de subconjunto)**. No primeiro caso, os atributos são ordenados de acordo com a sua relevância para discriminar os objetos das diferentes classes. A segunda alternativa seleciona um subconjunto dos atributos originais que melhor separe os exemplos das diferentes classes, os quais são avaliados em conjunto.
+
+A seleção de atributos tanto por ordenação quanto por seleção de subconjunto, e utilizando ou não informação sobre a classe, pode ser feita com as abordagens filtro ou *wrapper*. A abordagem embutida trabalha com a seleção de subconjuntos. A escolha da melhor abordagem para seleção de atributos depende das propriedades a serem medidas. 
+
+**Técnicas de Ordenação**
+
+Ordenação de atributos pode ser vista como uma forma simples de seleção, em que os atributos são ordenados de acordo com sua relevância para um dado critério (por exemplo, classificação dos objetos nas diferentes classes). Frequentemente, essa ordenação é realizada de maneira univariada, ou seja, cada atributo é avaliado independentemente dos demais. Em problemas de classificação, os atributos no topo da ordenação são selecionados para utilização pelo classificador.
+
+As técnicas de ordenação, em geral, usam algum critério como medida de importância dos atributos. Algumas dessas medidas avaliam similaridade (medidas de correlação), e outras avaliam a diferença (medida de distância) entre vetores. As medidas podem ou não considerar a informação sobre a classe. Deve ser observado que, no caso da ordenação dependente da classe, o primeiro atributo é aquele que melhor discrimina os objetos das diferentes classes, o segundo é o segundo melhor atributo para essa discriminação e assim por diante.
+
+Na seleção do subconjunto, os atributos que fazem parte do subconjunto selecionado não necessariamente estariam no topo da lista se uma técnica de ordenação fosse utilizada. O que importa nesse caso é como os atributos selecionados atuam de forma coletiva, em conjunto. Isso ocorre, por exemplo, porque dois atributos situados próximos na lista ordenada podem estar correlacionados. Logo, a ordenação não é capaz de detectar redundâncias entre os atributos.
+
+**Técnicas de Seleção de Subconjunto**
+
+A seleção de um subconjunto de atributos é um processo computacionalmente mais custoso que a ordenação dos atributos. Essa desvantagem aumenta com o crescimento do número de atributos. **Uma alternativa geralmente utilizada é primeiro ordenar os atributos originais com alguma técnica de ordenação para em seguida selecionar um subconjunto a partir dos atributos melhor classificados na ordenação.**
+
+A seleção de um subconjunto de atributos pode ser vista como um problema de busca. Cada ponto no espaço de busca pode ser considerado como um possível subconjunto de atributos. Por essa ótica, um método de seleção deve definir:
+- Qual será o **ponto de partida** ou a direção em que a busca será realizada;
+- Que **estratégia de busca** será adotada;
+- Qual critério será empregado para a **avaliação** dos subconjuntos gerados;
+- Qual será o **critério de parada**.
+
+**Ponto de Partida**: Quatro diferentes alternativas podem ser adotadas:
+- *Backward generation*, que começa com todos os atributos e remove um por vez.
+- *Forward generation*, que começa com nenhum atributo e inclui um atributo por vez.
+- *Bidirectional generation*, em que a busca pode começar em qualquer ponto, e atributos podem ser adicionados e removidos.
+- *Random generation*, quando o ponto de partida da busca e atributos a serem removidos ou adicionados são decididos aleatoriamente.
+
+**Estratégia de Busca**: As principais abordagens são:
+- Busca completa (ou exaustiva), que avalia todos os possíveis subconjuntos.
+- Busca heurística (sequencial), que utiliza regras e métodos para conduzir a busca e que não garante que uma solução ótima seja encontrada.
+- Busca não determinística, que está relacionada com a geração estocástica. Nesse caso, embora uma boa solução possa ser encontrada antes do final da busca, não é possível garantir que será encontrada a melhor solução possível.
+
+**Critério de Avaliação**: Discutidos anteriormente, são as abordagens filtro, *wrapper* ou embutida.
+
+**Critério de Parada**: Com relação ao final da busca, pode ser conduzida uma busca exaustiva, em que a busca é encerrada quando todos os subconjuntos forem testados, ou pode ser adotado um critério de parada, que define quando terminar a busca pelo melhor subconjunto de atributos. Esse critério pode ser, por exemplo, um número máximo de alternativas testadas, um número de atributos a serem selecionados sem degradação do desempenho ou o tempo do processamento.
 
 
