@@ -64,4 +64,20 @@ Uma grande parte dos trabalhos de pesquisa relacionados com o algoritmo k-NN inv
 Alguns autores apresentaram vários algoritmos para selecionar os objetos mais relevantes, designados por protótipos, para o problema de aprendizado, de forma a reter em memória apenas esses objetos. As versões do algoritmo Edit k-NN para eliminação e inserção sequencial são dois exemplos de algoritmos que armazenam apenas protótipos. No primeiro caso, o algoritmo começa com todos os objetos e vai descartando os objetos que são corretamente classificados pelo conjunto de protótipos. No segundo, o conjunto de protótipos começa vazio. Os objetos que são incorretamente classificados pelo conjunto de protótipos são acrescentados a esse conjunto.
 #### Raciocínio Baseado em Casos
 
+Raciocínio baseado em casos (RBC) é uma metodologia de AM para a resolução de problemas fundamentada na utilização de experiências passadas. Assim, um sistema de RBC procura resolver um novo problema apresentado por meio da recuperação de problemas similares previamente solucionados de uma memória ou base de casos (BC) e adaptação da solução utilizada no problema recuperado para resolver o novo problema.
+
+RBC difere de outros paradigmas de AM nos seguintes aspectos:
+- Enquanto outros paradigmas utilizam conhecimento geral do domínio ou constroem relações entre problemas e soluções, RBC é capaz de utilizar conhecimento específico de problemas vistos anteriormente.
+- RBC possibilita de forma natural o aprendizado incremental, pela atualização da BC sempre que um novo problema é resolvido, tornando o novo conhecimento disponível para futuro uso.
+
+O desempenho de um sistema de RBC depende da estrutura e conteúdo de sua base de casos. Para a construção de uma base de casos, é necessário decidir o que armazenar em um caso, encontrar uma estrutura apropriada para descrever o conteúdo dos casos e definir como os casos devem ser organizados e indexados, para possibilitar a recuperação rápida e a reutilização eficaz de soluções anteriores.
+
+Um caso pode representar diferentes tipos de conhecimento e assumir distintas formas de representação. Uma forma simples de representar casos é por meio de um conjunto de pares atributo-valor. Esse conjunto é dividido em dois subconjuntos. O primeiro possui os atributos que descrevem o problema e o segundo, os atributos relacionados com sua solução. Por exemplo, podemos ter um RBC que escolhe pacotes de viagens. Então, a descrição recebe o ambiente desejado, a duração, a região do país e uma estimativa de custo. Por sua vez, a solução do problema apresenta um local, um transporte sugerido, a acomodação ideal e onde fazer as refeições.
+
+Um modelo frequentemente utilizado para descrever as etapas de um sistema RBC é o ciclo de RBC. Esse ciclo compreende quatro etapas principais:
+- **Recuperação**: recuperação do caso armazenado na BC mais similar ao novo problema apresentado.
+- **Reutilização**: adaptação da parte de solução do caso recuperado. A solução do problema recuperado é geralmente utilizada como ponto de partida para propor uma solução para o novo problema. Essa etapa também é denominada adaptação de casos.
+- **Revisão**: a solução adaptada é revisada pelo usuário para validar sua relevância para resolver o novo problema.
+- **Retenção**: caso, após a etapa de revisão, a solução adaptada seja considerada relevante, o novo problema, junto com essa solução, pode ser armazenado na BC.
+
 
