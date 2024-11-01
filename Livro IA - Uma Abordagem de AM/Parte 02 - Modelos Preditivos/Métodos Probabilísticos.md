@@ -48,3 +48,59 @@ P(Doença = **ausente** | Teste = positivo) = (P(Teste = positivo | Doença = au
 Como 0,66 > 0,40, podemos considerar que o paciente está doente.
 
 #### Classificador Naive Bayes
+
+Assumindo que os valores dos atributos de um exemplo são independentes entre si dada a classe $P(x | y_{i})$ pode ser decomposto no produto $P(x^{1} | y_{i}) x ... x P(x^{d} | y_{i})$, em que $x^j$ é o j-ésimo atributo do exemplo x. Com isso, a probabilidade de um exemplo pertencer à classe $y_i$ é proporcional à expressão:
+
+$P(y_i | x) = P(y_{i})  \prod_{j=1}^{d} P(x^j | y_i)$ 
+
+O classificador obtido pelo uso da função discriminante apresentada acima é conhecido como classificador naive Bayes. O termos naive (ingênuo) vem da hipótese de que os valores dos atributos de um exemplo são independentes de sua classe.
+
+A fórmula do naive Bayes pode ser expressa de uma outra forma. Aplicado logaritmos à equação anterior, obtém-se:
+
+$log(P(y_i | x)) = log(P(y_i)) + \sum{j}{} log(P(x^j | y_i))$
+
+**Detalhes da Implementação**
+
+Todas as probabilidades necessárias para a obtenção do classificador naive Bayes são computadas a partir dos dados de treinamento. Para calcular a probabilidade a priori de observar a classe $y_i$, $P(y_i)$, é necessário manter um contador para cada classe. Para calcular a probabilidade condicional de observar o valor de um atributo dado que o exemplo pertence a uma classe, é necessário distinguir entre atributos qualitativos e atributos quantitativos.
+
+No caso de atributos qualitativos, o conjunto de possíveis valores é um conjunto enumerável. Para calcular a probabilidade condicional, basta manter um contador para cada valor de atributo por classe. No caso de atributos contínuos, quando o número de possíveis valores é infinito, há duas possibilidades. A primeira é assumir uma distribuição particular para os valores do atributo, e geralmente é assumida a distribuição normal. A segunda alternativa é discretizar o atributo em uma fase de pré-processamento. Alguns trabalho evidenciam que a primeira alternativa produz piores resultados que a última.
+
+Alguns autores propõem que o número de intervalos seja fixado em k = min (10, número de valores diferentes) intervalos do mesmo tamanho. Uma vez que o atributo foi discretizado, um contado para cada classe e para cada intervalo pode ser utilizado para calcular a probabilidade condicional $P(Atributo_j | Classe_j)$.
+
+**Exemplo Ilustrativo**
+
+Este exemplo utiliza um conjunto de dados para o problema balance. Nesse problema, cada exemplo é classificado em uma de três posições de uma balança: a balança está inclinada para a direita, para a esquerda ou sem inclinação (equilibrada ou balanceada). Os atributos são o peso do lado esquerdo, a dimensão do braço esquerdo, o peso do lado direito e a dimensão do braço direito. A forma correta para encontrar a classe é o maior valor entre: $Distância_{esq} \times Peso_{esq}$  e $Distância_{dir} \times Peso_{dir}$. Se estes valores são iguais, o estado da balança, sua classe, é balanceada.
+
+Para esse conjunto de dados, o domínio de todos os atributos é o conjunto {1, 2, 3, 4, 5}. O conjunto de dados contém 625 exemplos, distribuídos da forma como é apresentado na tabela abaixo. Para calcular as probabilidades a priori, $P(Classe_i)$, é necessário contar o número de exemplos para cada classe.
+
+|           | Balanceada | Esquerda | Direita |
+| --------- | ---------- | -------- | ------- |
+| Contagem  | 49         | 288      | 288     |
+| P(Classe) | 0,078      | 0,461    | 0,461   |
+
+Para calcular a probabilidade condicional de observar um valor específico de atributo dada a classe, $P(Atributo_j | Classe_j)$, é necessário descobrir o tipo do atributo. Nesse problema, todos os atributos são numéricos, pois dizem respeito a distâncias e pesos. Pode-se assumir que seu domínio é um conjunto de números reais. Sem mais nenhuma informação, a hipótese mais razoável é que eles são normalmente distribuídos. Considerando essa hipótese, para estimar as probabilidades condicionais, é preciso calcular a média e o desvio padrão dos valores dos atributos para cada classe.
+
+Como alternativa, pode-se discretizar os atributos. Nesse problema, aplicando a regra k = min (10; número de atributos diferentes), são obtidos cinco intervalos. A tabela abaixo apresenta a distribuição de valores para cada atributo em cada classe.
+
+
+| $Peso_{esq}$      | V = 1 | V = 2 | V = 3 | V = 4 | V = 5 |
+| ----------------- | ----- | ----- | ----- | ----- | ----- |
+| Balanceada        | 10    | 11    | 9     | 10    | 9     |
+| Esquerda          | 17    | 43    | 63    | 77    | 88    |
+| Direita           | 98    | 71    | 53    | 38    | 28    |
+| $Distância_{esq}$ | V = 1 | V = 2 | V = 3 | V = 4 | V = 5 |
+| Balanceada        | 10    | 11    | 9     | 10    | 9     |
+| Esquerda          | 17    | 43    | 63    | 77    | 88    |
+| Direita           | 98    | 71    | 53    | 38    | 28    |
+| $Peso_{dir}$      | V = 1 | V = 2 | V = 3 | V = 4 | V = 5 |
+| Balanceada        | 10    | 11    | 9     | 10    | 9     |
+| Esquerda          | 17    | 43    | 63    | 77    | 88    |
+| Direita           | 98    | 71    | 53    | 38    | 28    |
+| $Distância_{dir}$ | V = 1 | V = 2 | V = 3 | V = 4 | V = 5 |
+| Balanceada        | 10    | 11    | 9     | 10    | 9     |
+| Esquerda          | 17    | 43    | 63    | 77    | 88    |
+| Direita           | 98    | 71    | 53    | 38    | 28    |
+
+
+
+
