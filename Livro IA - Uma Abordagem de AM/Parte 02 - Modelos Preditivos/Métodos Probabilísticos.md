@@ -82,25 +82,46 @@ Para calcular a probabilidade condicional de observar um valor específico de at
 
 Como alternativa, pode-se discretizar os atributos. Nesse problema, aplicando a regra k = min (10; número de atributos diferentes), são obtidos cinco intervalos. A tabela abaixo apresenta a distribuição de valores para cada atributo em cada classe.
 
+| $Peso_{esq}$      | V = 1  | V = 2  | V = 3  | V = 4 | V = 5 |
+| ----------------- | ------ | ------ | ------ | ----- | ----- |
+| Balanceada        | 10     | 11     | 9      | 10    | 9     |
+| Esquerda          | 17     | 43     | **63** | 77    | 88    |
+| Direita           | 98     | 71     | 53     | 38    | 28    |
+| $Distância_{esq}$ | V = 1  | V = 2  | V = 3  | V = 4 | V = 5 |
+| Balanceada        | 10     | 11     | 9      | 10    | 9     |
+| Esquerda          | 17     | **43** | 63     | 77    | 88    |
+| Direita           | 98     | 71     | 53     | 38    | 28    |
+| $Peso_{dir}$      | V = 1  | V = 2  | V = 3  | V = 4 | V = 5 |
+| Balanceada        | 10     | 11     | 9      | 10    | 9     |
+| Direita           | 17     | 43     | 63     | 77    | 88    |
+| Esquerda          | **98** | 71     | 53     | 38    | 28    |
+| $Distância_{dir}$ | V = 1  | V = 2  | V = 3  | V = 4 | V = 5 |
+| Balanceada        | 10     | 11     | 9      | 10    | 9     |
+| Direita           | 17     | 43     | 63     | 77    | 88    |
+| Esquerda          | 98     | 71     | **53** | 38    | 28    |
 
-| $Peso_{esq}$      | V = 1 | V = 2 | V = 3 | V = 4 | V = 5 |
-| ----------------- | ----- | ----- | ----- | ----- | ----- |
-| Balanceada        | 10    | 11    | 9     | 10    | 9     |
-| Esquerda          | 17    | 43    | 63    | 77    | 88    |
-| Direita           | 98    | 71    | 53    | 38    | 28    |
-| $Distância_{esq}$ | V = 1 | V = 2 | V = 3 | V = 4 | V = 5 |
-| Balanceada        | 10    | 11    | 9     | 10    | 9     |
-| Esquerda          | 17    | 43    | 63    | 77    | 88    |
-| Direita           | 98    | 71    | 53    | 38    | 28    |
-| $Peso_{dir}$      | V = 1 | V = 2 | V = 3 | V = 4 | V = 5 |
-| Balanceada        | 10    | 11    | 9     | 10    | 9     |
-| Esquerda          | 17    | 43    | 63    | 77    | 88    |
-| Direita           | 98    | 71    | 53    | 38    | 28    |
-| $Distância_{dir}$ | V = 1 | V = 2 | V = 3 | V = 4 | V = 5 |
-| Balanceada        | 10    | 11    | 9     | 10    | 9     |
-| Esquerda          | 17    | 43    | 63    | 77    | 88    |
-| Direita           | 98    | 71    | 53    | 38    | 28    |
+Chegando um novo exemplo **x** com os valores $Peso_{esq} = 3$, $Distância_{esq} = 2$, $Peso_{dir} = 1$ e $Distância_{dir} = 3$, sabemos que a balança neste caso está para a esquerda (pois 3 x 2 > 1 x 3), mas o que o Naive Bayes nos diz? Devemos computar os valores de P(Classe | x) para cada classe (ou seja, para Classe = Esquerda, Classe = Direita e Classe = Balanceada) e retornar a classe para a qual o maior valor de probabilidade a posteriori é obtido.
 
+Usando os valores de atributos discretizados, é possível obter P(Classe = Esquerda | x ) = 0,71, P(Classe = Direita | x ) = 0,20 e P(Classe = Balanceada | x ) = 0,09. Assim, a classe esquerda é predita.
 
+O cálculo para o caso de P(Classe = Esquerda | x ) é apresentado a seguir:
 
+$log\space P(Classe = Esquerda | x ) = log \space P(Classe = Esquerda) + log \space P(Peso_{esq} = 3 | Classe = Esquerda)$
+$+ \space log \space P(Distância_{esq} = 2 | Classe = Esquerda) + log \space P(Peso_{dir} = 1 | Classe = Esquerda)$
+$+ log \space P(Distância_{dir} = 3 | Classe = Esquerda)$
 
+$log\space P(Classe = Esquerda | x ) = log(0,461) + log(63/288) + log (43/288) + + log(98/288) + log(53/288) = -3,03$
+
+$P(Classe = Esquerda | x ) = 10^{(-3,03)} = 0,00093$
+
+#### Análise do Algoritmo
+
+**Aspectos Positivos**
+Todas as probabilidades exigidas pela equação do classificador Naive Bayes podem ser calculadas a partir do conjunto de treinamento em uma única passagem. O processo de construir o modelo é bastante eficiente. Outro aspecto interessante do algoritmo é que ele é fácil de implementar de uma forma incremental. 
+Além disso, certos autores mostram que o Naive Bayes tem um bom desempenho em uma grande variedade de domínios, incluindo muitos em que há claras dependências entre os atributos. Em problemas de classificação e para a função de custo 0 - 1, um exemplo é corretamente classificado desde que a ordenação das classes dada pelas estimativas das probabilidades a posteriori esteja correta, independentemente de essas estimativas serem (ou não) realistas.
+O classificador também é robusto à presença de ruídos e atributos irrelevantes. As teorias aprendidas são fáceis de compreender pelos especialistas do domínio. Outra característica interessante é que o desempenho do Naive Bayes não decresce na presença de atributos irrelevantes. Isso porque o atributo contribuirá igualmente na previsão das duas classes e os outros atributos é que determinarão a classificação final.
+
+**Aspectos Negativos**
+O impacto das variáveis redundantes deve ser levado em consideração no desempenho do algoritmo Naive Bayes. Ao analisarmos a equação do algoritmo, notamos que o atributo redundante terá um peso maior nas decisões do modelo. Isso ocorre porque o algoritmo desconsidera a relação entre os atributos, tratando-os como independentes.
+O tratamento de atributos com valores contínuos também não é direto, sendo necessário ou discretizá-los previamente, ou assumir uma distribuição de probabilidade para cada um deles. 
+Frequentemente, os valores de probabilidade obtidos pelo algoritmo não são realistas. Contudo, eles fornecem um bom ranqueamento, de maneira que a regra por máximo a posteriori pode ser aplicada com sucesso.
